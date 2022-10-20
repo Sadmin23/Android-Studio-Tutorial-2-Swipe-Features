@@ -1,4 +1,5 @@
 package com.example.androidswipegesturetutorial;
+
 import android.os.Bundle;
 import android.view.View;
 
@@ -7,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -14,50 +16,43 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    // creating a variable for recycler view,
-    // array list and adapter class.
     private RecyclerView CategoryRV;
     private ArrayList<CategoryData> CategoryList;
     private CategoryAdapter CategoryAdapter;
+
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // initializing our variables.
         CategoryRV = findViewById(R.id.idCategory);
+        swipeRefreshLayout = findViewById(R.id.swipelayout);
 
-        // creating new array list.
         CategoryList = new ArrayList<>();
 
-        // in below line we are adding data to our array list.
-        CategoryList.add(new CategoryData("DSA Course"));
-        CategoryList.add(new CategoryData("DSA Course"));
-        CategoryList.add(new CategoryData("DSA Course"));
-        CategoryList.add(new CategoryData("DSA Course"));
+        CategoryList.add(new CategoryData("Electronics"));
+        CategoryList.add(new CategoryData("Women's Clothing"));
+        CategoryList.add(new CategoryData("Men's Clothing"));
+        CategoryList.add(new CategoryData("Jewlery"));
+        CategoryList.add(new CategoryData("Home and Lifestyle"));
+        CategoryList.add(new CategoryData("Food and Groceries"));
+        CategoryList.add(new CategoryData("Sports and Fitness"));
+        CategoryList.add(new CategoryData("Others"));
 
-        // initializing our adapter class with our array list and context.
+
         CategoryAdapter = new CategoryAdapter(CategoryList, this);
 
-        // below line is to set layout manager for our recycler view.
         LinearLayoutManager manager = new LinearLayoutManager(this);
 
-        // setting layout manager for our recycler view.
         CategoryRV.setLayoutManager(manager);
 
-        // below line is to set adapter
-        // to our recycler view.
         CategoryRV.setAdapter(CategoryAdapter);
 
-        // on below line we are creating a method to create item touch helper
-        // method for adding swipe to delete functionality.
-        // in this we are specifying drag direction and position to right
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                // this method is called
-                // when the item is moved.
                 return false;
             }
 
@@ -76,5 +71,12 @@ public class MainActivity extends AppCompatActivity {
                 }).show();
             }
         }).attachToRecyclerView(CategoryRV);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 }
