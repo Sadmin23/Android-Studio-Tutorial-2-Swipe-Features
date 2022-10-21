@@ -13,11 +13,9 @@ import java.util.ArrayList;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.RecyclerViewHolder> {
 
-    // creating a variable for our array list and context.
     private ArrayList<CategoryData> categoryDataArrayList;
     private Context mcontext;
 
-    // creating a constructor class.
     public CategoryAdapter(ArrayList<CategoryData> recyclerDataArrayList, Context mcontext) {
         this.categoryDataArrayList = recyclerDataArrayList;
         this.mcontext = mcontext;
@@ -27,7 +25,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Recycl
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_layout, parent, false);
         return new RecyclerViewHolder(view);
     }
 

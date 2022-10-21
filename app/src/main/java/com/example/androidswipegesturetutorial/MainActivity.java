@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         CategoryRV = findViewById(R.id.idCategory);
-        swipeRefreshLayout = findViewById(R.id.swipelayout);
 
         CategoryList = new ArrayList<>();
 
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         CategoryRV.setAdapter(CategoryAdapter);
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -72,9 +71,26 @@ public class MainActivity extends AppCompatActivity {
             }
         }).attachToRecyclerView(CategoryRV);
 
+        swipeRefreshLayout = findViewById(R.id.swipelayout);
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                int size=CategoryList.size();
+                CategoryList.clear();
+                CategoryAdapter.notifyItemRangeRemoved(0,size);
+
+                CategoryList.add(new CategoryData("Electronics"));
+                CategoryList.add(new CategoryData("Women's Clothing"));
+                CategoryList.add(new CategoryData("Men's Clothing"));
+                CategoryList.add(new CategoryData("Jewelry"));
+                CategoryList.add(new CategoryData("Home and Lifestyle"));
+                CategoryList.add(new CategoryData("Food and Groceries"));
+                CategoryList.add(new CategoryData("Sports and Fitness"));
+                CategoryList.add(new CategoryData("Others"));
+
+                CategoryAdapter.notifyItemRangeInserted(0,size);
+
                 swipeRefreshLayout.setRefreshing(false);
             }
         });

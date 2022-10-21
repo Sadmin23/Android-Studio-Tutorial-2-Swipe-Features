@@ -10,8 +10,6 @@
     android:id="@+id/swipelayout"
     tools:context=".MainActivity">
 
-    <!--creating a recycler view for
-        displaying our list of courses-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/idCategory"
         android:layout_width="match_parent"
